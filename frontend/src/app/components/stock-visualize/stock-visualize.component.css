@@ -1,0 +1,24 @@
+/* stock-visualize.component.css */
+button {
+    background-color: #009DFF;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  button:hover {
+    background-color: #007bb5;
+  }
+  
+  h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  canvas {
+    max-width: 100%;
+    height: 400px;
+  }
+  
