@@ -1,16 +1,13 @@
 package com.stock.controller;
 
+import java.util.Collections;
 import java.util.concurrent.ExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.stock.config.security.JwtUtil;
 import com.stock.dto.JwtRequest;
@@ -21,6 +18,7 @@ import com.stock.service.UserDetailsServiceImpl;
 import com.stock.service.UserService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
 	@Autowired
@@ -72,8 +70,13 @@ public class UserController {
 //    }
 
 	@PostMapping("/user")
-	public String createUser(@RequestBody User user) throws ExecutionException, InterruptedException {
-		return userService.saveUser(user);
+	public ResponseEntity<?> createUser(@RequestBody User user) throws ExecutionException, InterruptedException {
+		String result = userService.saveUser(user);
+		if (result.contains("already exists")) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+		} else {
+			return ResponseEntity.status(HttpStatus.CREATED).body(Collections.singletonMap("message", result));
+		}
 	}
 
 	@GetMapping("/user/{email}")

@@ -1,0 +1,9 @@
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
