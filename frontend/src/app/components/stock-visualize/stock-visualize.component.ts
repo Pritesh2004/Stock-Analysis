@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Chart, registerables } from 'chart.js';
@@ -16,7 +16,7 @@ Chart.register(...registerables);
   standalone: true,
   imports: [CommonModule, HttpClientModule, BaseChartDirective]  // Use ChartsModule here
 })
-export class StockVisualizeComponent {
+export class StockVisualizeComponent implements OnInit{
   stockData: any;
   stockChartData!: ChartData<'line'>;
   stockChartOptions: ChartOptions = {  // Initialize with default options
@@ -38,6 +38,9 @@ export class StockVisualizeComponent {
   };
 
   constructor(private http: HttpClient) {}
+  ngOnInit(): void {
+    this.fetchStockData();
+  }
 
   fetchStockData() {
     this.http

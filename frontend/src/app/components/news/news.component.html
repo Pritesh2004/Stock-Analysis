@@ -1,0 +1,23 @@
+<div class="news-container">
+    <h1>Tesla Stock News</h1>
+  
+    <div *ngIf="isLoading" class="loading">Loading news...</div>
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+  
+    <div *ngIf="!isLoading && !errorMessage">
+      <div
+        class="news-card"
+        *ngFor="let article of newsData"
+        (click)="goToPrediction(article)"
+      >
+        <img [src]="article.image_url" alt="News Image" class="news-image" />
+        <div class="news-content">
+          <h2 class="news-title">{{ article.title }}</h2>
+          <p class="news-date">Published: {{ article.pubDate | date: 'medium' }}</p>
+          <p class="news-category">{{ article.description }}</p>
+          <a [href]="article.link" target="_blank" class="read-more">Read More</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
