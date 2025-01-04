@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 
 @Component({
@@ -11,5 +11,16 @@ import { RouterModule } from '@angular/router';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
+  constructor(private router: Router) {}
 
+  // Check if the JWT token exists in localStorage
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('jwtToken'); // Replace 'jwtToken' with your actual token key
+  }
+
+  // Logout function to clear the token and navigate to login page
+  logout(): void {
+    localStorage.removeItem('jwtToken'); // Remove JWT token from localStorage
+    this.router.navigate(['/login']); // Navigate to login page after logout
+  }
 }

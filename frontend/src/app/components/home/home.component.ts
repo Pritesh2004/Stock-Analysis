@@ -14,4 +14,16 @@ import { NewsComponent } from '../news/news.component';
 })
 export class HomeComponent {
 
+  companies = [
+    { name: 'Apple', symbol: 'AAPL' },
+    { name: 'Tesla', symbol: 'TSLA' },
+    { name: 'Microsoft', symbol: 'MSFT' },
+    { name: 'Amazon', symbol: 'AMZN' }
+  ];
+
+  selectedCompany = this.companies[0]; // Default to the first company
+
+  selectCompany(company: any): void {
+    this.selectedCompany = company;
+  }
 }

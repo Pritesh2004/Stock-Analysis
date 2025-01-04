@@ -1,34 +1,46 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { environment } from '../../const/environment';
+import { AuthService } from '../../service/auth.service';
 
 @Component({
   selector: 'app-news',
   imports: [CommonModule, HttpClientModule],
   templateUrl: './news.component.html',
-  styleUrls: ['./news.component.css'], // Fixed typo from styleUrl to styleUrls
+  styleUrls: ['./news.component.css'],
 })
-export class NewsComponent implements OnInit {
+export class NewsComponent implements OnChanges {
+  @Input() companyName!: string;
+  @Input() companySymbol!: string;
+
   newsData: any[] = [];
   isLoading = true;
   errorMessage = '';
 
-  private apiUrl =
-    'https://newsdata.io/api/1/latest?apikey=pub_642552ec94792d0d4edddb8f84870e011850f&q=Tesla%20stock';
+  selectedArticleIndex: number | null = null;
+  predictionResult: any = null;
+  isLoadingPrediction = false;
+  errorMessagePrediction = '';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  private predictionApiUrl = 'http://localhost:8000/predict'; // Update with your actual API URL
 
-  fetchNews(): Observable<any> {
-    return this.http.get(this.apiUrl);
+  constructor(private http: HttpClient, private authService : AuthService, private router : Router) {}
+
+  ngOnChanges(): void {
+    if (this.companyName) {
+      this.fetchNews();
+    }
   }
 
-  ngOnInit(): void {
-    this.fetchNews().subscribe(
-      (data) => {
-        this.newsData = data.results; // Adjust based on API response structure
+  fetchNews(): void {
+    const apiUrl = `https://newsdata.io/api/1/news?apikey=${environment.newsApiKey}&q=${this.companyName} stock`;
+    this.http.get(apiUrl).subscribe(
+      (data: any) => {
+        this.newsData = data.results || [];
         this.isLoading = false;
       },
       (error) => {
@@ -38,12 +50,45 @@ export class NewsComponent implements OnInit {
     );
   }
 
-  goToPrediction(article: any): void {
-    this.router.navigate(['/prediction'], {
-      queryParams: {
-        title: article.title,
-        description: article.description,
+  togglePrediction(index: number, article: any): void {
+    if (!this.authService.getToken()) {
+      // If user is not logged in, show a pop-up and redirect to login
+      alert('Please log in first to use the prediction feature.');
+      this.router.navigate(['/login']); // Adjust the route as needed
+      return;
+    }
+    if (this.selectedArticleIndex === index) {
+      // Hide prediction if already selected
+      this.selectedArticleIndex = null;
+      this.predictionResult = null;
+      return;
+    }
+
+    // Show prediction for the selected article
+    this.selectedArticleIndex = index;
+    this.makePrediction(article);
+  }
+
+  makePrediction(article: any): void {
+    const payload = {
+      headline: article.title + ' ' + article.description,
+      ticker: 123, // Assuming this is your ticker
+    };
+
+    this.isLoadingPrediction = true;
+    this.errorMessagePrediction = '';
+    this.predictionResult = null;
+
+    this.http.post(this.predictionApiUrl, payload).subscribe(
+      (response: any) => {
+        this.predictionResult = response; // Adjust according to API response
+        this.isLoadingPrediction = false;
+        console.log(response);
       },
-    });
+      (error) => {
+        this.errorMessagePrediction = 'Failed to get prediction. Please try again later.';
+        this.isLoadingPrediction = false;
+      }
+    );
   }
 }

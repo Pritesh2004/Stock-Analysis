@@ -1,5 +1,12 @@
-<p>navbar works!</p>
+<!-- navbar.component.html -->
+<p>Navbar works!</p>
+
+<!-- Always show Home link -->
 <a routerLink="/">Home</a>
 
-<a routerLink="/login">Login</a>
-<a routerLink="/register">Register</a>
+<!-- Show Login and Register links only if JWT token is absent -->
+<a *ngIf="!isLoggedIn()" routerLink="/login">Login</a>
+<a *ngIf="!isLoggedIn()" routerLink="/register">Register</a>
+
+<!-- Show Logout link only if JWT token is present -->
+<button *ngIf="isLoggedIn()" (click)="logout()">Logout</button>

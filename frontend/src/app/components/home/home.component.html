@@ -1,5 +1,14 @@
 <app-navbar></app-navbar>
 <h1>Home dashboard</h1>
 
-<app-stock-visualize></app-stock-visualize>
-<app-news></app-news>
+<div class="home-container">
+    <h1>Stock Dashboard</h1>
+    <div class="company-buttons">
+      <button *ngFor="let company of companies" (click)="selectCompany(company)" mat-raised-button>
+        {{ company.name }}
+      </button>
+    </div>
+  
+    <app-stock-visualize [companySymbol]="selectedCompany.symbol"></app-stock-visualize>
+    <app-news [companyName]="selectedCompany.name" [companySymbol]="selectedCompany.symbol"></app-news>
+  </div>

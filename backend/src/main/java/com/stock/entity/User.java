@@ -1,18 +1,11 @@
 package com.stock.entity;
-
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-
 import com.google.cloud.firestore.annotation.PropertyName;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-@SuppressWarnings("serial")
-public class User implements UserDetails{
+public class User implements UserDetails {
 
 	@PropertyName("userId")
 	private String userId;
@@ -25,6 +18,24 @@ public class User implements UserDetails{
 
 	@PropertyName("password")
 	private String password;
+
+	// Additional fields for UserDetails interface
+	@PropertyName("authorities")
+	private List<GrantedAuthority> authorities;
+
+	@PropertyName("enabled")
+	private boolean enabled;
+
+	@PropertyName("accountNonExpired")
+	private boolean accountNonExpired;
+
+	@PropertyName("accountNonLocked")
+	private boolean accountNonLocked;
+
+	@PropertyName("credentialsNonExpired")
+	private boolean credentialsNonExpired;
+
+	// Getters and Setters for the new fields
 
 	public String getName() {
 		return name;
@@ -56,8 +67,11 @@ public class User implements UserDetails{
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
+		return authorities;
+	}
+
+	public void setAuthorities(List<GrantedAuthority> authorities) {
+		this.authorities = authorities;
 	}
 
 	@Override
@@ -65,36 +79,44 @@ public class User implements UserDetails{
 		return this.password;
 	}
 
-
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
 		return email;
 	}
-	
+
 	@Override
 	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
+		return accountNonExpired;
+	}
+
+	public void setAccountNonExpired(boolean accountNonExpired) {
+		this.accountNonExpired = accountNonExpired;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return true;
+		return accountNonLocked;
+	}
+
+	public void setAccountNonLocked(boolean accountNonLocked) {
+		this.accountNonLocked = accountNonLocked;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
+		return credentialsNonExpired;
+	}
+
+	public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+		this.credentialsNonExpired = credentialsNonExpired;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
+		return enabled;
 	}
-		
-	
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
 }

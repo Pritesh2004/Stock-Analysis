@@ -1,5 +1,5 @@
 <p>stock-visualize works!</p>
-<div *ngIf="stockData">
+<!-- <div *ngIf="stockData">
   <h2>Stock Data</h2>
 
   <div *ngIf="stockChartData">
@@ -13,4 +13,20 @@
 
 <div *ngIf="!stockData">
   <p>Loading...</p>
+</div> -->
+
+
+<div *ngIf="stockData">
+  <h2>{{ companySymbol }} Stock Visualization</h2>
+  <canvas
+    *ngIf="stockChartData"
+    baseChart
+    [data]="stockChartData"
+    [options]="stockChartOptions"
+    [type]="'line'">
+  </canvas>
+</div>
+
+<div *ngIf="!stockData">
+  <p>Loading stock data...</p>
 </div>

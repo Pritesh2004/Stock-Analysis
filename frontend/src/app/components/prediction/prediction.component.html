@@ -1,23 +1,25 @@
-
 <app-navbar></app-navbar>
 
 <div class="prediction-container">
-    <h1>Prediction Results</h1>
-  
-    <div *ngIf="isLoading" class="loading">Loading prediction...</div>
-    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
-  
-    <div *ngIf="!isLoading && !errorMessage && predictionResult">
-      <p><strong>Headline:</strong> {{ title }}</p>
-      <p><strong>Description:</strong> {{ description }}</p>
-      <p><strong>Ticker:</strong> {{ ticker }}</p>
-  
-      <h2>Prediction:</h2>
-      <p><strong>Probability of Trade:</strong> {{ predictionResult.probability_trade | percent }}</p>
-      <p><strong>Probability of Close:</strong> {{ predictionResult.probability_close | percent }}</p>
-      <p><strong>Predicted Close Price:</strong> {{ predictionResult.predicted_close | currency }}</p>
-    </div>
+  <h1>Prediction Results for {{ companyName }}</h1>
+
+  <div *ngIf="isLoading" class="loading">Loading prediction...</div>
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+  <p><strong>Headline:</strong> {{ title }}</p>
+    <p><strong>Description:</strong> {{ description }}</p>
+    <p><strong>Company Symbol:</strong> {{ companySymbol }}</p>
+
+  <div *ngIf="!isLoading && !errorMessage && predictionResult">
+
+    <h2>Prediction:</h2>
+    <p><strong>Probability of Trade:</strong> {{ predictionResult.probability_trade | percent }}</p>
+    <p><strong>Probability of Close:</strong> {{ predictionResult.probability_close | percent }}</p>
+    <p><strong>Predicted Close Price:</strong> {{ predictionResult.predicted_close | currency }}</p>
   </div>
-  <app-stock-visualize></app-stock-visualize>
-  <app-news></app-news>
-  
+</div>
+
+<h2>Stock Visualization</h2>
+<app-stock-visualize [companySymbol]="companySymbol"></app-stock-visualize>
+
+<h2>Latest News</h2>
+<app-news [companyName]="companyName"></app-news>

@@ -49,7 +49,7 @@ export class LoginComponent {
     this.login(jwtRequest).subscribe(
       (response) => {
         this.saveToken(response.token); // Save JWT in localStorage
-        this.router.navigate(['/prediction']); // Redirect to the home page after login
+        this.router.navigate(['/']); // Redirect to the home page after login
       },
       (error) => {
         console.error('Error during login:', error);

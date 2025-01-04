@@ -1,23 +1,24 @@
-import { Component } from '@angular/core';
-import { NavbarComponent } from '../navbar/navbar.component';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { StockVisualizeComponent } from '../stock-visualize/stock-visualize.component';
 import { NewsComponent } from '../news/news.component';
+import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
   selector: 'app-prediction',
-  imports: [NavbarComponent,CommonModule, HttpClientModule, StockVisualizeComponent , NewsComponent],
+  imports: [NavbarComponent, CommonModule, HttpClientModule, StockVisualizeComponent, NewsComponent],
   templateUrl: './prediction.component.html',
-  styleUrl: './prediction.component.css'
+  styleUrls: ['./prediction.component.css'] // Fixed typo from styleUrl to styleUrls
 })
-export class PredictionComponent {
-  
+export class PredictionComponent implements OnInit {
+  companyName = '';
+  companySymbol = '';
   title = '';
   description = '';
-  ticker:number = 123; // Default ticker, can be dynamically set if needed
+  ticker = 123; // Default ticker, can be dynamically set if needed
   predictionResult: any = null;
   isLoading = false;
   errorMessage = '';
@@ -28,9 +29,14 @@ export class PredictionComponent {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
+      this.companyName = params['companyName'] || '';
+      this.companySymbol = params['companySymbol'] || '';
       this.title = params['title'] || '';
       this.description = params['description'] || '';
-      this.makePrediction();
+
+      if (this.title && this.description) {
+        this.makePrediction();
+      }
     });
   }
 

@@ -28,6 +28,7 @@ app = FastAPI()
 # CORS configuration
 origins = [
     "http://localhost:3000",
+    "http://localhost:4200",
     "https://soft-stock.netlify.app"
 ]
 app.add_middleware(

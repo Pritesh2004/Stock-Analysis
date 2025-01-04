@@ -1,23 +1,40 @@
 <div class="news-container">
-    <h1>Tesla Stock News</h1>
-  
-    <div *ngIf="isLoading" class="loading">Loading news...</div>
-    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
-  
-    <div *ngIf="!isLoading && !errorMessage">
-      <div
-        class="news-card"
-        *ngFor="let article of newsData"
-        (click)="goToPrediction(article)"
-      >
+  <h2>{{ companyName }} Stock News</h2>
+
+  <div *ngIf="isLoading" class="loading">Loading news...</div>
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+  <div *ngIf="!isLoading && !errorMessage">
+    <div
+      class="news-card"
+      *ngFor="let article of newsData; let i = index"
+      (click)="togglePrediction(i, article)"
+    >
+      <!-- Left side: News -->
+      <div class="news-left" [ngClass]="{'slide-left': selectedArticleIndex === i}">
         <img [src]="article.image_url" alt="News Image" class="news-image" />
         <div class="news-content">
-          <h2 class="news-title">{{ article.title }}</h2>
-          <p class="news-date">Published: {{ article.pubDate | date: 'medium' }}</p>
-          <p class="news-category">{{ article.description }}</p>
-          <a [href]="article.link" target="_blank" class="read-more">Read More</a>
+          <h3>{{ article.title }}</h3>
+          <p>{{ article.description }}</p>
+          <a [href]="article.link" target="_blank">Read More</a>
+        </div>
+      </div>
+
+      <!-- Right side: Prediction -->
+      <div class="news-right" [ngClass]="{'slide-right': selectedArticleIndex === i}">
+        <div *ngIf="isLoadingPrediction">
+          Loading prediction...
+        </div>
+        <div *ngIf="errorMessagePrediction">
+          {{ errorMessagePrediction }}
+        </div>
+        <div *ngIf="predictionResult">
+          <h4>Prediction Result:</h4>
+          <p>Probability Close: {{ predictionResult.probability_close }}</p>
+          <p>Probability Trade: {{ predictionResult.probability_trade }}</p>
+          <p>Predicted Close: {{ predictionResult.predicted_close }}</p>
         </div>
       </div>
     </div>
   </div>
-  
+</div>
