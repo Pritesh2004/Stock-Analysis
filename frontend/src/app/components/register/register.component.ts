@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { NavbarComponent } from '../navbar/navbar.component';
 
 interface User {
   name: string;
@@ -13,7 +12,7 @@ interface User {
 
 @Component({
   selector: 'app-register',
-  imports: [FormsModule, CommonModule,HttpClientModule, NavbarComponent],
+  imports: [FormsModule, CommonModule,HttpClientModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
   standalone: true

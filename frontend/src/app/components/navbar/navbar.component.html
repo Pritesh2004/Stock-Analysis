@@ -1,47 +1,48 @@
-<header class="sticky top-0 bg-white z-10 py-2 shadow-md">
-    <div class="flex justify-between items-center max-w-screen-xl mx-auto h-16 px-10">
-      <!-- Logo Section -->
-      <div class="logo">
-        <a routerLink="/">
-            <img src="/frontend/src/assets/stock.jpg" alt="Logo" class="w-[200px] h-auto" />
+<header #header class="sticky top-0 z-10 bg-white transition-shadow duration-300">
+  <div class="flex items-center justify-between max-w-screen-xl mx-auto h-24 px-10">
+    <!-- Logo Section -->
+    <div class="logo " >
+      <a routerLink="/">
+        <img src="/assets/logo.png" alt="Logo" class="w-[200px] h-auto" />
+      </a>
+    </div>
+
+    <!-- Links (Desktop) -->
+    <div class="hidden md:flex gap-10">
+      <a href="#news" class="text-xl font-semibold text-black hover:text-primary transition-colors">News</a>
+      <a href="#stock" class="text-xl font-semibold text-black hover:text-primary transition-colors">Stock</a>
+      <a href="#contact" class="text-xl font-semibold text-black hover:text-primary transition-colors">Contact</a>
+    </div>
+
+    <!-- Authentication (Desktop) -->
+    <div class="hidden md:flex gap-2">
+      <ng-container *ngIf="isLoggedIn(); else loggedOut">
+        <button (click)="logout()" class="bg-gradient-to-tr from-red-500 to-pink-400 text-white font-semibold py-3 px-5 rounded-md hover:opacity-90 transition-opacity">
+          Logout
+        </button>
+      </ng-container>
+      <ng-template #loggedOut>
+        <a routerLink="/login" class="font-semibold text-white bg-gradient-to-tr
+        from-primary to-primary_light px-5 py-3 rounded-md 
+        max-lg:hidden hover:opacity-90">
+          Sign In
         </a>
-      </div>
-  
-      <!-- Links (Desktop) -->
-      <div class="hidden md:flex gap-10">
-        <a href="#news" class= "font-semibold text-black ">News</a>
-        <a href="#stock" class=" font-semibold text-black">Stock</a>
-        <a href="#contact" class=" font-semibold text-black">Contact</a>
-      </div>
-  
-      <!-- Authentication (Desktop) -->
-      <div class="hidden md:flex gap-2">
-        <ng-container *ngIf="isLoggedIn(); else loggedOut">
-          <button (click)="logout()" class="bg-gradient-to-tr from-red-500 to-pink-400 text-white font-semibold py-3 px-5 rounded-md hover:opacity-90 transition-opacity">
-            Logout
-          </button>
-        </ng-container>
-        <ng-template #loggedOut>
-          <a routerLink="/login" class="bg-gradient-to-tr from-blue-500 to-blue-300 text-white font-semibold py-3 px-5 rounded-md hover:opacity-90 transition-opacity">
-            Sign In
-          </a>
-        </ng-template>
-      </div>
-  
-      <!-- Mobile Menu Toggle -->
-      <div class="md:hidden cursor-pointer text-2xl" (click)="toggleMenu()">
-        <span *ngIf="!isMenuOpen">☰</span>
-        <span *ngIf="isMenuOpen">X</span>
-      </div>
+      </ng-template>
     </div>
-  
-    <!-- Mobile Menu -->
-    <div class="absolute top-35 right-0 bg-white shadow-md p-5 w-[250px] md:hidden" *ngIf="isMenuOpen">
-        <a routerLink="/" class="block font-semibold py-2 text-black">News</a>
-        <a routerLink="/" class="block font-semibold py-2 text-black">Stock</a>
-        <a routerLink="/" class="block font-semibold py-2 text-black">Contact</a>
-      <a *ngIf="!isLoggedIn()" routerLink="/login" class="block font-semibold py-2 text-black">Sign in</a>
-      <button *ngIf="isLoggedIn()" (click)="logout()" class="block font-semibold py-2 text-black">Logout</button>
+
+    <!-- Mobile Menu Toggle -->
+    <div class="md:hidden cursor-pointer text-2xl" (click)="toggleMenu()">
+      <span *ngIf="!isMenuOpen">☰</span>
+      <span *ngIf="isMenuOpen">X</span>
     </div>
-  </header>
-  
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="absolute top-20 right-0 bg-white shadow-md p-5 w-[250px] md:hidden transition-transform" *ngIf="isMenuOpen">
+    <a routerLink="/" class="block font-semibold py-2 text-black hover:text-primary">News</a>
+    <a routerLink="/" class="block font-semibold py-2 text-black hover:text-primary">Stock</a>
+    <a routerLink="/" class="block font-semibold py-2 text-black hover:text-primary">Contact</a>
+    <a *ngIf="!isLoggedIn()" routerLink="/login" class="block font-semibold py-2 text-black hover:text-primary">Sign In</a>
+    <button *ngIf="isLoggedIn()" (click)="logout()" class="block font-semibold py-2 text-black hover:text-primary">Logout</button>
+  </div>
+</header>

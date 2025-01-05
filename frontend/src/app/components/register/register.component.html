@@ -1,26 +1,85 @@
-<app-navbar></app-navbar>
-
-<div class="container">
-    <h2>Register</h2>
-    <form (ngSubmit)="onSubmit()" #userForm="ngForm">
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" id="name" class="form-control" [(ngModel)]="user.name" name="name" required />
-      </div>
-  
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" class="form-control" [(ngModel)]="user.email" name="email" required />
-      </div>
-  
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" class="form-control" [(ngModel)]="user.password" name="password" required />
-      </div>
-  
-      <button type="submit" class="btn btn-primary" [disabled]="!userForm.form.valid">Register</button>
+<div class="flex h-screen">
+  <!-- Left Section -->
+  <div class="flex-1 flex flex-col justify-center items-center px-4 md:px-8 bg-white">
+    <a href="/">
+      <img
+        src="/assets/logo.png"
+        alt="logo img"
+        class="w-70 h-auto"
+      />
+    </a>
+    <div class="mb-8 text-center mt-8">
+      <p class="text-4xl font-extrabold">Register now</p>
+      <p class="text-2xl font-semibold text-gray-400 mt-3">
+        Discover the power of Soft Stocks!
+      </p>
+    </div>
+    <form
+      (ngSubmit)="onSubmit()"
+      class="w-full max-w-md flex flex-col gap-4"
+    >
+      <!-- Email Input -->
+      <label for="email" class="flex flex-col font-bold">
+        Email
+        <input
+          type="email"
+          [(ngModel)]="user.email"
+          name="email"
+          placeholder="Email"
+          required
+          pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}"
+          title="Please enter a valid email address"
+          class="mt-1 p-3 border border-gray-300 rounded-md font-medium outline-none focus:border-primary"
+        />
+      </label>
+      <!-- Password Input -->
+      <label for="password" class="flex flex-col font-bold relative">
+        Password
+        <div class="relative">
+          <input
+            type="password"
+            [(ngModel)]="user.password"
+            name="password"
+            placeholder="Password"
+            required
+            class="mt-1 w-full p-3 border border-gray-300 rounded-md font-medium outline-none focus:border-primary"
+          />
+        </div>
+      </label>
+      <!-- Name Input -->
+      <label for="name" class="flex flex-col font-bold">
+        Name
+        <input
+          type="text"
+          [(ngModel)]="user.name"
+          name="name"
+          placeholder="Name"
+          required
+          class="mt-1 p-3 border border-gray-300 rounded-md font-medium outline-none focus:border-primary"
+        />
+      </label>
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="mt-4 px-4 py-3 font-semibold text-white bg-gradient-to-r from-primary to-primary_light rounded-md hover:opacity-90"
+      >
+        Sign up
+      </button>
     </form>
-  
-    <p *ngIf="message" class="alert alert-info">{{ message }}</p>
+    <!-- Sign In Redirect -->
+    <div class="mt-4">
+      <p class="font-semibold">
+        Already have an account? 
+        <a routerLink="/login" class="cursor-pointer underline text-blue-800">Sign in</a>
+      </p>
+    </div>
   </div>
-  
+  <!-- Right Section -->
+  <div class="hidden lg:flex flex-1">
+    <img
+      src="/assets/signUp.jpg"
+      alt="Sign Up"
+      class="object-cover w-full h-full rounded-l-[50px]"
+    />
+  </div>
+</div>

@@ -4,7 +4,15 @@ module.exports = {
     "./src/**/*.{html,ts}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        custom: ["Cambria", "serif"],
+      },
+      colors: {
+        primary: "#4046ed",
+        primary_light: "#7795f8",
+      },
+    },
   },
   plugins: [],
 }

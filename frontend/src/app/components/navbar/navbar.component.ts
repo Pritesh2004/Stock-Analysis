@@ -1,19 +1,31 @@
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-
 
 @Component({
   selector: 'app-navbar',
   imports: [CommonModule, HttpClientModule, RouterModule],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit, OnDestroy {
   isMenuOpen = false;
 
-  constructor(private router: Router) {}
+  @ViewChild('header', { static: false }) headerRef: ElementRef | undefined;
+
+  constructor(private router: Router, private renderer: Renderer2) {}
+
+  ngOnInit(): void {
+    // Add scroll event listener when the component is initialized
+    window.addEventListener('scroll', this.handleScroll.bind(this));
+    this.handleScroll(); // Check scroll position initially
+  }
+
+  ngOnDestroy(): void {
+    // Remove scroll event listener when the component is destroyed
+    window.removeEventListener('scroll', this.handleScroll.bind(this));
+  }
 
   // Check if the JWT token exists in localStorage
   isLoggedIn(): boolean {
@@ -29,5 +41,17 @@ export class NavbarComponent {
   // Toggle mobile menu visibility
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  // Handle scroll event to add/remove shadow
+  handleScroll(): void {
+    if (this.headerRef) {
+      const scrollTop = window.scrollY;
+      if (scrollTop > 0) {
+        this.renderer.addClass(this.headerRef.nativeElement, 'shadow-md');
+      } else {
+        this.renderer.removeClass(this.headerRef.nativeElement, 'shadow-md');
+      }
+    }
   }
 }

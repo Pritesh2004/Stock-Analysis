@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { NavbarComponent } from '../navbar/navbar.component';
 
 
 interface JwtRequest {
@@ -21,7 +20,7 @@ interface JwtResponse {
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports:[CommonModule, FormsModule, HttpClientModule, NavbarComponent],
+  imports:[CommonModule, FormsModule, HttpClientModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })

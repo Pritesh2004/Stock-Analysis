@@ -5,10 +5,11 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { NewsComponent } from '../news/news.component';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, HttpClientModule,NavbarComponent, StockVisualizeComponent, NewsComponent],
+  imports: [CommonModule, HttpClientModule,NavbarComponent, StockVisualizeComponent, NewsComponent, FooterComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
