@@ -1,14 +1,52 @@
 <app-navbar></app-navbar>
-<h1>Home dashboard</h1>
 
-<div class="home-container">
-    <h1>Stock Dashboard</h1>
-    <div class="company-buttons">
-      <button *ngFor="let company of companies" (click)="selectCompany(company)" mat-raised-button>
+<div class="min-h-screen flex flex-col items-center bg-gray-50 py-10 px-6">
+  <!-- Main Heading -->
+  <h1 class="text-4xl font-bold text-center mb-6 leading-relaxed">
+    Your Gateway to Stock Predictions <br />
+    Powered by <span class="text-blue-600">News Headlines</span>
+  </h1>
+
+  <!-- Subheading -->
+  <p class="text-lg text-gray-600 text-center max-w-3xl mb-10 leading-relaxed">
+    Leverage the power of news headlines to determine sentiment and predict the impact on stock prices. 
+    Stay ahead of the market with real-time insights. Make informed decisions with data-driven predictions 
+    for stock performance.
+  </p>
+
+  <!-- Stock Dashboard Section -->
+  <div class="w-full max-w-6xl bg-white shadow-lg rounded-xl p-8">
+    <!-- Section Heading -->
+    <h2 class="text-2xl font-semibold text-center text-gray-800 mb-8">
+      Latest Updates on <span class="text-blue-600">{{ selectedCompany.name || 'Your Selected Company' }}</span>
+    </h2>
+
+    <!-- Company Buttons -->
+    <div class="flex flex-wrap justify-center gap-4 mb-8">
+      <button
+        *ngFor="let company of companies"
+        (click)="selectCompany(company)"
+        class="bg-gray-100 text-gray-700 py-2 px-6 rounded-full shadow-md hover:bg-blue-500 hover:text-white transition duration-300 ease-in-out"
+      >
         {{ company.name }}
       </button>
     </div>
-  
-    <app-stock-visualize [companySymbol]="selectedCompany.symbol"></app-stock-visualize>
-    <app-news [companyName]="selectedCompany.name" [companySymbol]="selectedCompany.symbol"></app-news>
+
+    <!-- Stock Visualize Component -->
+    <div class="mb-8">
+      <app-stock-visualize
+        *ngIf="selectedCompany"
+        [companySymbol]="selectedCompany.symbol"
+      ></app-stock-visualize>
+    </div>
+
+    <!-- News Component -->
+    <div>
+      <app-news
+        *ngIf="selectedCompany"
+        [companyName]="selectedCompany.name"
+        [companySymbol]="selectedCompany.symbol"
+      ></app-news>
+    </div>
   </div>
+</div>
