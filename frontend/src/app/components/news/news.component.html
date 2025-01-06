@@ -1,40 +1,45 @@
-<div id="news" class="news-container">
-  <h2>{{ companyName }} Stock News</h2>
-
-  <div *ngIf="isLoading" class="loading">Loading news...</div>
-  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+<div id="news" class="container mx-auto p-6">
+  <div *ngIf="isLoading" class="text-center text-gray-500">
+    Loading news...
+  </div>
+  <div *ngIf="errorMessage" class="text-center text-red-500">
+    {{ errorMessage }}
+  </div>
 
   <div *ngIf="!isLoading && !errorMessage">
-    <div
-      class="news-card"
-      *ngFor="let article of newsData; let i = index"
-      (click)="togglePrediction(i, article)"
-    >
-      <!-- Left side: News -->
-      <div class="news-left" [ngClass]="{'slide-left': selectedArticleIndex === i}">
-        <img [src]="article.image_url" alt="News Image" class="news-image" />
-        <div class="news-content">
-          <h3>{{ article.title }}</h3>
-          <p>{{ article.description }}</p>
-          <a [href]="article.link" target="_blank">Read More</a>
-        </div>
-      </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+     
+      <div
+  class="flex-col justify-between news-card bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer transform hover:scale-105 transition duration-300"
+  *ngFor="let article of newsData"
+>
+  <img
+    [src]="article.image_url"
+    alt="News Image"
+    class="w-full h-48 object-cover"
+    (click)="navigateToPrediction(article)"
 
-      <!-- Right side: Prediction -->
-      <div class="news-right" [ngClass]="{'slide-right': selectedArticleIndex === i}">
-        <div *ngIf="isLoadingPrediction">
-          Loading prediction...
-        </div>
-        <div *ngIf="errorMessagePrediction">
-          {{ errorMessagePrediction }}
-        </div>
-        <div *ngIf="predictionResult">
-          <h4>Prediction Result:</h4>
-          <p>Probability Close: {{ predictionResult.probability_close }}</p>
-          <p>Probability Trade: {{ predictionResult.probability_trade }}</p>
-          <p>Predicted Close: {{ predictionResult.predicted_close }}</p>
-        </div>
-      </div>
+  />
+  <div class="bg-blue-50 flex flex-col justify-between h-48 overflow-hidden">
+    <p class="font-semibold text-md text-gray-800 mb-4 mt-4">
+      {{ article.title }}
+    </p>
+    <div class="flex flex-row justify-end gap-1 mb-4 mr-2">
+      <p class="text-xs text-gray-600">{{ article.source_name }} - </p>
+      <p class="text-xs text-gray-600">{{ article.pubDate }}</p>
+    </div>
+    <a
+      [href]="article.link"
+      class=" h-10 rounded-b-lg text-center bg-gradient-to-r
+          from-primary to-primary_light text-white flex
+          items-center justify-center"
+    >
+      Read More
+    </a>
+  </div>
+</div>
+
+
     </div>
   </div>
 </div>

@@ -6,10 +6,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { StockVisualizeComponent } from '../stock-visualize/stock-visualize.component';
 import { NewsComponent } from '../news/news.component';
 import { NavbarComponent } from '../navbar/navbar.component';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-prediction',
-  imports: [NavbarComponent, CommonModule, HttpClientModule, StockVisualizeComponent, NewsComponent],
+  imports: [NavbarComponent, CommonModule, HttpClientModule, NewsComponent, FooterComponent, StockVisualizeComponent],
   templateUrl: './prediction.component.html',
   styleUrls: ['./prediction.component.css'] // Fixed typo from styleUrl to styleUrls
 })

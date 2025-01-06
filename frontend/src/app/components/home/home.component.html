@@ -1,23 +1,25 @@
 <app-navbar></app-navbar>
 
-<div class="min-h-screen flex flex-col items-center  py-10 px-6">
+<div class="min-h-screen text-center flex flex-col items-center  py-10 px-6 mt-4">
   <!-- Main Heading -->
-  <h1 class="text-4xl font-bold text-center mb-6 leading-relaxed">
+  <h1 class="max-w-5xl mx-auto text-5xl font-bold 
+  max-md:text-3xl">
     Your Gateway to Stock Predictions <br />
     Powered by <span class="text-blue-600">News Headlines</span>
   </h1>
 
   <!-- Subheading -->
-  <p class="text-lg text-gray-600 text-center max-w-3xl mb-10 leading-relaxed">
+  <p class="max-w-xl mx-auto font-medium text-xl 
+  max-md:text-[18px] max-sm:text-[16px] text-zinc-500 mt-6">
     Leverage the power of news headlines to determine sentiment and predict the impact on stock prices. 
     Stay ahead of the market with real-time insights. Make informed decisions with data-driven predictions 
     for stock performance.
   </p>
 
   <!-- Stock Dashboard Section -->
-  <div class="w-full max-w-6xl bg-white shadow-lg rounded-xl p-8">
+  <div class="w-full max-w-6xl bg-white rounded-xl p-8 mt-14">
     <!-- Section Heading -->
-    <h2 class="text-2xl font-semibold text-center text-gray-800 mb-8">
+    <h2 class="text-4xl font-bold mb-8 text-center mx-5 max-sm:text-3xl">
       Latest Updates on <span class="text-blue-600">{{ selectedCompany.name || 'Your Selected Company' }}</span>
     </h2>
 
@@ -26,19 +28,24 @@
       <button
         *ngFor="let company of companies"
         (click)="selectCompany(company)"
-        class="bg-gray-100 text-gray-700 py-2 px-6 rounded-full shadow-md hover:bg-blue-500 hover:text-white transition duration-300 ease-in-out"
+        [ngClass]="{
+          'bg-gradient-to-r from-primary to-primary_light text-white shadow-primary/50': selectedCompany === company,
+          'bg-primary_light/10 text-gray-800 shadow-primary_light/30': selectedCompany !== company
+        }"
+        class="rounded-lg px-5 py-3 shadow-md cursor-pointer 
+        transition-all duration-300"
       >
         {{ company.name }}
       </button>
     </div>
-
+    
     <!-- Stock Visualize Component -->
-    <div class="mb-8">
+    <!-- <div class="mb-8">
       <app-stock-visualize
         *ngIf="selectedCompany"
         [companySymbol]="selectedCompany.symbol"
       ></app-stock-visualize>
-    </div>
+    </div> -->
 
     <!-- News Component -->
     <div>
