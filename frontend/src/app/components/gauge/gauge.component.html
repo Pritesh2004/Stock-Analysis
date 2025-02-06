@@ -1,0 +1,17 @@
+<div class="relative w-44 h-44 flex items-center justify-center">
+  <!-- Gauge Chart -->
+  <canvas baseChart
+    [data]="gaugeChartData"
+    [options]="gaugeChartOptions"
+    [type]="gaugeChartType"
+    class="relative w-full h-full">
+  </canvas>
+
+  <!-- Centered Percentage Display -->
+  <div class="absolute inset-0 flex flex-col items-center justify-center">
+    <span class="text-2xl font-bold text-gray-800">
+      {{ (probability * 100) | number: '1.0-0' }}%
+    </span>
+    <span class="text-sm text-gray-600">{{ label }}</span>
+  </div>
+</div>

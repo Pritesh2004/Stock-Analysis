@@ -7,10 +7,12 @@ import { StockVisualizeComponent } from '../stock-visualize/stock-visualize.comp
 import { NewsComponent } from '../news/news.component';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { FooterComponent } from '../footer/footer.component';
+import { GaugeComponent } from '../gauge/gauge.component';
+
 
 @Component({
   selector: 'app-prediction',
-  imports: [NavbarComponent, CommonModule, HttpClientModule, NewsComponent, FooterComponent, StockVisualizeComponent],
+  imports: [NavbarComponent, CommonModule, HttpClientModule, NewsComponent, FooterComponent, StockVisualizeComponent, GaugeComponent],
   templateUrl: './prediction.component.html',
   styleUrls: ['./prediction.component.css'] // Fixed typo from styleUrl to styleUrls
 })
@@ -39,6 +41,12 @@ export class PredictionComponent implements OnInit {
         this.makePrediction();
       }
     });
+  }
+
+  showFullDescription = false;  // Initially collapsed
+
+  toggleDescription() {
+    this.showFullDescription = !this.showFullDescription;
   }
 
   makePrediction(): void {

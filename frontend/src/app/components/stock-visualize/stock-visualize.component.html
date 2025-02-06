@@ -1,32 +1,26 @@
-<p>stock-visualize works!</p>
-<!-- <div *ngIf="stockData">
-  <h2>Stock Data</h2>
+<div class="flex justify-center items-center min-h-screen bg-gray-100 p-4">
+  <div class="bg-white shadow-lg rounded-2xl p-6 w-full max-w-3xl">
+    <h2 class="text-2xl font-semibold text-gray-800 mb-4 text-center">{{ companySymbol }} Stock Visualization</h2>
+    
+    <div *ngIf="stockData" class="flex flex-col items-center">
+      <canvas *ngIf="stockChartData" baseChart [data]="stockChartData" [options]="stockChartOptions" [type]="'line'">
+      </canvas>
+    </div>
 
-  <div *ngIf="stockChartData">
-    <canvas baseChart
-            [data]="stockChartData"
-            [options]="stockChartOptions"
-            [type]="'line'">
-    </canvas>
+    <div *ngIf="!stockData" class="text-center text-gray-500">
+      <p>Loading stock data...</p>
+    </div>
+
+    <div *ngIf="stockData" class="mt-6 bg-gray-200 p-6 rounded-lg shadow-md">
+      <h3 class="text-lg font-semibold text-gray-800 mb-2">Latest Stock Data</h3>
+      <p class="text-center text-gray-600 mb-4">Date: {{ latestStockDate | date:'MMM d, yyyy' }}</p>
+      <div class="grid grid-cols-2 gap-4 text-gray-700">
+        <p><strong>Open:</strong> {{ latestStockData['1. open'] | number:'1.2-2' }}</p>
+        <p><strong>High:</strong> {{ latestStockData['2. high'] | number:'1.2-2' }}</p>
+        <p><strong>Low:</strong> {{ latestStockData['3. low'] | number:'1.2-2' }}</p>
+        <p><strong>Close:</strong> {{ latestStockData['4. close'] | number:'1.2-2' }}</p>
+        <p class="col-span-2 text-center"><strong>Volume:</strong> {{ latestStockData['5. volume'] }}</p>
+      </div>
+    </div>
   </div>
-</div>
-
-<div *ngIf="!stockData">
-  <p>Loading...</p>
-</div> -->
-
-
-<div *ngIf="stockData">
-  <h2>{{ companySymbol }} Stock Visualization</h2>
-  <canvas
-    *ngIf="stockChartData"
-    baseChart
-    [data]="stockChartData"
-    [options]="stockChartOptions"
-    [type]="'line'">
-  </canvas>
-</div>
-
-<div *ngIf="!stockData">
-  <p>Loading stock data...</p>
 </div>

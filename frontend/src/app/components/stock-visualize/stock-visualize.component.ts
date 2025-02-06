@@ -21,6 +21,8 @@ export class StockVisualizeComponent implements OnChanges {
   @Input() companySymbol!: string;
 
   stockData: any;
+  latestStockData: any;
+  latestStockDate: any;
   stockChartData!: ChartData<'line'>;
   stockChartOptions: ChartOptions = {
     responsive: true,
@@ -49,29 +51,46 @@ export class StockVisualizeComponent implements OnChanges {
   }
 
   fetchStockData(): void {
-    const apiUrl = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${this.companySymbol}&interval=5min&apikey=${environment.alphaVantageApiKey}`;
+    const apiUrl = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${this.companySymbol}&apikey=${environment.alphaVantageApiKey}`;
     this.http.get(apiUrl).subscribe((data: any) => {
       this.stockData = data;
       this.processStockData();
     });
   }
-
+  
   processStockData(): void {
-    const timeSeries = this.stockData['Time Series (5min)'];
-    const labels = Object.keys(timeSeries);
-    const prices = labels.map((time) => timeSeries[time]['4. close']);
+    const timeSeries = this.stockData['Time Series (Daily)'];
+    if (!timeSeries) return;
+
+    const sortedDates = Object.keys(timeSeries)
+      .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
+      .slice(0, 25); // Get the last 25 days
+
+    const prices = sortedDates.map((date) => timeSeries[date]['4. close']);
 
     this.stockChartData = {
-      labels: labels.reverse(),
+      labels: sortedDates.reverse().map((date) => this.formatShortDate(date)),
       datasets: [
         {
           label: `${this.companySymbol} Stock Price`,
           data: prices.reverse(),
           fill: false,
           borderColor: 'rgb(75, 192, 192)',
-          tension: 0.1
-        }
-      ]
+          tension: 0.1,
+        },
+      ],
     };
+
+    // Store the latest stock data (most recent day)
+    this.latestStockDate = sortedDates[sortedDates.length-1];
+    this.latestStockData = timeSeries[sortedDates[sortedDates.length-1]];
   }
+  
+
+  
+  formatShortDate(dateString: string): string {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  }
+  
 }
